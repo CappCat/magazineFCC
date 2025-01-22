@@ -7,6 +7,42 @@
     <link rel="stylesheet" href="styles.css">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Anton%7CBaskervville%7CRaleway&display=swap">
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.2/css/all.css">
+    <style>
+        .light-mode body {
+            background-color: linen;
+            color: #000000;
+        }
+        .light-mode .hero-title, .light-mode .hero-subtitle, .light-mode .author-name, .light-mode .publish-date, .light-mode .quote, .light-mode .list-subtitle {
+            color: #224f71;
+        }
+
+        .light-mode .author-name a, .light-mode .list-title{
+            color: orangered;
+        }
+
+
+        .light-mode .social-icons a, .light-mode .social-icons button {
+            color: #333333;
+        }
+        .light-mode .author-name a:hover{
+            background-color: #000000;
+        }
+
+        .light-mode .theme-toggle {
+            background-color: #333333;
+            color: linen !important; 
+        }
+
+        .light-mode .read-text {
+            background-color: #224f71;
+            color: linen !important; 
+
+        }
+
+        .light-mode .social-icons a:hover, .light-mode .social-icons button:hover {
+            color: #000000;
+        }
+    </style>
 </head>
 <body>
     <main>
@@ -21,14 +57,11 @@
                 <p class="publish-date">7 de marzo de 2019</p>
             </div>
             <div class="social-icons">
-                <a href="https://www.facebook.com/freecodecamp"><i class="fab fa-facebook-f"></i></a>
-                <a href="https://twitter.com/freecodecamp"><i class="fab fa-twitter"></i></a>
-                <a href="https://instagram.com/freecodecamp"><i class="fab fa-instagram"></i></a>
-                <a href="https://www.linkedin.com/school/free-code-camp"><i class="fab fa-linkedin-in"></i></a>
-                <a href="https://www.youtube.com/freecodecamp"><i class="fab fa-youtube"></i></a>
-                <button id="theme-toggle" class="theme-toggle far fa-circle">
-                </button>
-                <button id="read-text" class="read-text  fas fa-volume-up""></button>
+                <a href="https://www.facebook.com/freecodecamp"><i class="fab fa-facebook-f"></i><span class="sr-only">Facebook</span></a>
+                <a href="https://instagram.com/freecodecamp"><i class="fab fa-instagram"></i><span class="sr-only">Instagram</span></a>
+                <a href="https://www.youtube.com/freecodecamp"><i class="fab fa-youtube"></i><span class="sr-only">YouTube</span></a>
+                <button id="theme-toggle" class="theme-toggle far fa-circle"><span class="sr-only">Cambiar de tema</span></button>
+                <button id="read-text" class="read-text fas fa-volume-up"><span class="sr-only">Leer documento</span></button>
             </div>
         </section>
         <section class="text">
@@ -90,14 +123,14 @@
                 </ul>
             </article>
             <aside class="image-wrapper">
-                <img src="https://cdn.freecodecamp.org/testable-projects-fcc/images/random-quote-machine.png" alt="image of the quote machine project" class="image-1" loading="lazy" width="600" height="400">
-                <img src="https://cdn.freecodecamp.org/testable-projects-fcc/images/calc.png" alt="image of a calculator project" class="image-2" loading="lazy" width="400" height="400">
+                <img src="https://cdn.freecodecamp.org/testable-projects-fcc/images/random-quote-machine.png" alt="imagen del proyecto generador de citas" class="image-1" loading="lazy" width="600" height="400">
+                <img src="https://cdn.freecodecamp.org/testable-projects-fcc/images/calc.png" alt="Imagen de un proyecto de calculadora" class="image-2" loading="lazy" width="400" height="400">
                 <blockquote class="image-quote">
                     <hr>
                     <p class="quote">The millions of people who are learning to code through freeCodeCamp will have an even better resource to help them learn these fundamentals.</p>
                     <hr>
                 </blockquote>
-                <img src="https://cdn.freecodecamp.org/testable-projects-fcc/images/survey-form-background.jpeg" alt="four people working on code" loading="lazy" class="image-3" width="600" height="400">
+                <img src="https://cdn.freecodecamp.org/testable-projects-fcc/images/survey-form-background.jpeg" alt="Cuatro personas programando" loading="lazy" class="image-3" width="600" height="400">
             </aside>
         </section>
     </main>
@@ -155,24 +188,49 @@ themeToggle.addEventListener('click', () => {
     const readTextButton = document.getElementById('read-text');
 
 // Función para leer texto
+});
+
+const readTextButton = document.getElementById('read-text');
+
+// Función para leer texto
 document.addEventListener('DOMContentLoaded', function() {
     const readTextButton = document.getElementById('read-text');
     let isReading = false;
     let speechSynthesisUtterance;
 
+    const content = document.querySelectorAll('.text p, .hero-title, .hero-subtitle');
+
+
     readTextButton.addEventListener('click', function() {
         if (!isReading) {
-            const textToRead = document.querySelector('.text').innerText;
+
+
+                let textToRead = '';
+                content.forEach(element => {
+                 textToRead += element.textContent + ' ';
+                });
+
             speechSynthesisUtterance = new SpeechSynthesisUtterance(textToRead);
+            speechSynthesisUtterance.lang = 'es-ES'; // Idioma español
+            speechSynthesisUtterance.rate = 1; // Velocidad de lectura
+            speechSynthesisUtterance.pitch = 1; // Tono de voz
+
             window.speechSynthesis.speak(speechSynthesisUtterance);
             isReading = true;
+
+            readTextButton.classList.remove("fa-volume-up");
+
+            readTextButton.classList.add("fa-stop");
         } else {
             window.speechSynthesis.cancel();
             isReading = false;
+
+            readTextButton.classList.remove("fa-stop");
+
+            readTextButton.classList.add("fa-volume-up");
+
         }
     });
-});
-
 });
 </script>
 </html>
