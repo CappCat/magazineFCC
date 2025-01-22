@@ -28,7 +28,7 @@
                 <a href="https://www.youtube.com/freecodecamp"><i class="fab fa-youtube"></i></a>
                 <button id="theme-toggle" class="theme-toggle far fa-circle">
                 </button>
-                <button id="read-text" class="read-text">🔊 Leer contenido</button>
+                <button id="read-text" class="read-text  fas fa-volume-up""></button>
             </div>
         </section>
         <section class="text">
@@ -155,30 +155,22 @@ themeToggle.addEventListener('click', () => {
     const readTextButton = document.getElementById('read-text');
 
 // Función para leer texto
-readTextButton.addEventListener('click', () => {
-    const synth = window.speechSynthesis;
-    const content = document.querySelectorAll('.text p, .hero-title, .hero-subtitle');
+document.addEventListener('DOMContentLoaded', function() {
+    const readTextButton = document.getElementById('read-text');
+    let isReading = false;
+    let speechSynthesisUtterance;
 
-    // Verificamos si el navegador soporta la API de voz
-    if (!synth) {
-        alert('Tu navegador no soporta síntesis de voz.');
-        return;
-    }
-
-    // Recolectamos el contenido textual
-    let textToRead = '';
-    content.forEach(element => {
-        textToRead += element.textContent + ' ';
+    readTextButton.addEventListener('click', function() {
+        if (!isReading) {
+            const textToRead = document.querySelector('.text').innerText;
+            speechSynthesisUtterance = new SpeechSynthesisUtterance(textToRead);
+            window.speechSynthesis.speak(speechSynthesisUtterance);
+            isReading = true;
+        } else {
+            window.speechSynthesis.cancel();
+            isReading = false;
+        }
     });
-
-    // Crear una nueva instancia de síntesis de voz
-    const utterance = new SpeechSynthesisUtterance(textToRead);
-    utterance.lang = 'es-ES'; // Idioma español
-    utterance.rate = 1; // Velocidad de lectura
-    utterance.pitch = 1; // Tono de voz
-
-    // Reproducir el texto
-    synth.speak(utterance);
 });
 
 });
