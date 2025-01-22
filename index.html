@@ -26,6 +26,9 @@
                 <a href="https://instagram.com/freecodecamp"><i class="fab fa-instagram"></i></a>
                 <a href="https://www.linkedin.com/school/free-code-camp"><i class="fab fa-linkedin-in"></i></a>
                 <a href="https://www.youtube.com/freecodecamp"><i class="fab fa-youtube"></i></a>
+                <button id="theme-toggle" class="theme-toggle far fa-circle">
+                </button>
+                <button id="read-text" class="read-text">🔊 Leer contenido</button>
             </div>
         </section>
         <section class="text">
@@ -99,4 +102,85 @@
         </section>
     </main>
 </body>
+<script>
+    // Selección del botón y cambio de tema
+
+const themeToggle = document.getElementById('theme-toggle');
+
+const body = document.body;
+
+
+
+// Almacenar el tema actual en localStorage
+
+const currentTheme = localStorage.getItem('theme');
+
+if (currentTheme) {
+
+    body.classList.add(currentTheme);
+
+
+}
+
+
+
+themeToggle.addEventListener('click', () => {
+
+    if (body.classList.contains('light-mode')) {
+
+        body.classList.remove('light-mode');
+
+        localStorage.setItem('theme', 'dark-mode');
+
+        themeToggle.classList.remove("fas");
+
+        themeToggle.classList.add("far");
+        themeToggle.classList.add("fa-circle");
+
+
+    } else {
+
+        body.classList.add('light-mode');
+
+        localStorage.setItem('theme', 'light-mode');
+
+        themeToggle.classList.remove("far");
+        themeToggle.classList.remove("fa-circle");
+
+        themeToggle.classList.add("fas");
+        themeToggle.classList.add("fa-circle");
+
+    }
+
+    const readTextButton = document.getElementById('read-text');
+
+// Función para leer texto
+readTextButton.addEventListener('click', () => {
+    const synth = window.speechSynthesis;
+    const content = document.querySelectorAll('.text p, .hero-title, .hero-subtitle');
+
+    // Verificamos si el navegador soporta la API de voz
+    if (!synth) {
+        alert('Tu navegador no soporta síntesis de voz.');
+        return;
+    }
+
+    // Recolectamos el contenido textual
+    let textToRead = '';
+    content.forEach(element => {
+        textToRead += element.textContent + ' ';
+    });
+
+    // Crear una nueva instancia de síntesis de voz
+    const utterance = new SpeechSynthesisUtterance(textToRead);
+    utterance.lang = 'es-ES'; // Idioma español
+    utterance.rate = 1; // Velocidad de lectura
+    utterance.pitch = 1; // Tono de voz
+
+    // Reproducir el texto
+    synth.speak(utterance);
+});
+
+});
+</script>
 </html>

@@ -70,7 +70,7 @@ img{
 .social-icons{
     display: grid;
     font-size: 3rem;
-    grid-template-columns: repeat(5, 1fr);
+    grid-template-columns: repeat(6, 1fr);
     grid-auto-flow: column;
     grid-auto-columns: 1fr;
     align-items: center;
@@ -150,5 +150,60 @@ hr{
 @media only screen and (max-width: 420px){
     .hero-title{
         font-size: 4.5rem;
+    }
+}
+
+/* Estilos globales */
+:root {
+    --background-color-dark: rgb(20, 30, 40);
+    --text-color-dark: linen;
+    --background-color-light: #ffffff;
+    --text-color-light: #333333;
+}
+
+body {
+    font-family: Baskervville, serif;
+    color: var(--text-color-dark);
+    background-color: var(--background-color-dark);
+    transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+body.light-mode {
+    color: var(--text-color-light);
+    background-color: var(--background-color-light);
+}
+
+/* Botón de cambio de tema */
+.theme-toggle {
+    padding: 0.5rem 1rem;
+    background-color: orangered;
+    color: linen;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 1.6rem;
+    font-family: Raleway, sans-serif;
+}
+
+.theme-toggle:hover {
+    background-color: #e57300;
+}
+
+/* Mejoras en diseño responsivo */
+@media only screen and (max-width: 720px) {
+    .hero-title {
+        font-size: 6rem;
+    }
+    .text {
+        font-size: 1.6rem;
+    }
+}
+
+@media only screen and (max-width: 420px) {
+    .hero-title {
+        font-size: 4.5rem;
+    }
+    .theme-toggle {
+        font-size: 1.4rem;
     }
 }
