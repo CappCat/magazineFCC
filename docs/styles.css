@@ -45,7 +45,7 @@ main{
 }
 img{
     width: 100%;
-    object-fit: cover;
+    object-fit: contain;
 }
 .hero-title{
     text-align: center;
